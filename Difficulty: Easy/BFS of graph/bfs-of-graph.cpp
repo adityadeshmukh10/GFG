@@ -17,7 +17,7 @@ class Solution {
             int front= q.front();
             q.pop();
             ans.push_back(front);
-            for(auto &it : adj[front])
+            for(auto it : adj[front])
             {
                 if(!vis[it])
                 {
