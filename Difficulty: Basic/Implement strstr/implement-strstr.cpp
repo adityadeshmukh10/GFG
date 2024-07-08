@@ -27,10 +27,22 @@ int main()
 int strstr(string s, string x)
 {
      //Your code here
-     int ans=s.find(x);
-     if(ans>=0){
-         return ans;
+     for(int i=0;i<s.length();i++)
+     {
+         int count=0;
+         if(s[i]==x[0])
+         {
+             for(int j=0;j<x.length();j++)
+             {
+                 if(s[i+j]==x[j])
+                     count++;
+                 else 
+                     break;
+             }
+             if(count==x.length())
+                 return i;
+         }
+         
      }
      return -1;
-     
 }
