@@ -4,25 +4,43 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-  
-  
   public:
-  void dfs(int node,vector<int>&ans,vector<int>&visited,vector<int>adj[])
+    // Function to return a list containing the DFS traversal of the graph.
+    void DFS(unordered_map<int,vector<int>> &adj,int u, vector<bool> &visited,vector<int> &result)
     {
-        ans.push_back(node);
-        visited[node]=1;
-        for(auto it:adj[node])
+        if(visited[u]==true)
         {
-            if(!visited[it])
-            dfs(it,ans,visited,adj);
+            return;
+        }
+        
+        visited[u] = true;
+        result.push_back(u);
+        for(int &v: adj[u])
+        {
+            if(!visited[v])
+            {
+                DFS(adj,v,visited,result);
+            }
         }
     }
-    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+    vector<int> dfsOfGraph(int v, vector<int> mp[]) {
         // Code here
-        vector<int>visited(V,0);
-        vector<int >ans;
-            dfs(0,ans,visited,adj);
-        return ans;
+        unordered_map<int,vector<int>> adj;
+        
+        for(int u=0;u<v;u++)
+        {
+            for(auto v = mp[u].begin();v!=mp[u].end();v++)
+            {
+                adj[u].push_back(*v);
+            }
+        }
+        
+        vector<int> result;
+        vector<bool> visited(v,false);
+        
+        DFS(adj,0,visited,result);
+        
+        return result;
     }
 };
 
