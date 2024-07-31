@@ -15,12 +15,9 @@ class Solution{
     // k : find kth smallest element and return using this function
     int kthSmallest(int arr[], int l, int r, int k) {
         //code here
-        
-        //int n = arr.size();
-        sort(arr,arr+r+1);
-        
-            return arr[k-1];
-    
+        int n = r+1;
+        sort(arr,arr+n);
+        return arr[k-1];
     }
 };
 
