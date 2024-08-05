@@ -100,73 +100,52 @@ struct Node
 class Solution
 {
     public:
-    
-    vector<int> topView(Node *root) {
-        
-        // If the root node is a null pointer , there is no tree
-        // Hence , no top view
-        
-        if(root == nullptr) {
-          return {};
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    vector<int> topView(Node *root)
+    {
+        //Your code here
+        vector<int> ans;
+        if(root==NULL)
+        {
+            return ans;
         }
         
-        // So, we return an empty vector
+        map<int,int> topnode;
+        queue<pair<Node*,int>> q;
         
+        q.push(make_pair(root,0));
         
-        queue< pair<Node *,int> > q; // This queue will help in Level Order Traversal
-        vector<int> ans; // This vector will store the final answer
-        map<int,int> m; // This is a map which stores the first node seen for  every horizontal level
-        // while performing level wise traversal
+        while(!q.empty())
+        {
+            pair<Node*,int> temp = q.front();
+            q.pop();
+            Node* frontnode = temp.first;
+            int hd = temp.second;
+            
+            if(topnode.find(hd)==topnode.end())
+            {
+                topnode[hd] = frontnode->data;
+            }
+            if(frontnode->left)
+            {
+                q.push(make_pair(frontnode->left,hd-1));
+            }
+            if(frontnode->right)
+            {
+                q.push(make_pair(frontnode->right, hd+1));
+            }
+        }
         
-        q.push( {root,0} ); // We push the root node
-        
-        m[0] = root -> data; // The root node is the first node seen for horizontal level 0
-        // So we store it in the map
-        
-        int size; // This will store the size of the queue during traversal
-        
-        pair<Node *,int> front; // This will be used to point to the front of the queue while traversal
-        
-        while(!q.empty()) {
-          size = q.size();
-        
-          for(int i = 0; i < size; i++) {
-              
-              front = q.front();
-              q.pop();
-              
-              if(front.first -> left) {
-                  q.push( {front.first -> left, front.second - 1});
-                  int distance = front.second - 1;
-                  
-                  if(m.find(distance) == m.end()) { // If we haven't yet seen a node for the given horizontal level
-                      m[distance] = front.first->left->data; // we will store it in the map
-                  }
-              }
-              if(front.first -> right) {
-                  q.push( {front.first -> right,front.second + 1} );
-                  int distance = front.second + 1;
-                  
-                  if(m.find(distance) == m.end()) {// If we haven't yet seen a node for the given horizontal level
-                      m[distance] = front.first->right->data;// we will store it in the map
-                  }
-              }
-          }
-          
-      }
-      
-      // We will iterate over the map and store the nodes seen for each horizontal level from least to greatest
-      // and put them in the vector
-      for(auto x:m) {
-        ans.push_back(x.second);
-      }
-      
-      return ans; // We finally return the vector
-        
+        for(auto i:topnode)
+        {
+            ans.push_back(i.second);
+        }
+        return ans;
     }
-    
 
 };
+
 
 
 //{ Driver Code Starts.
