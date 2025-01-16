@@ -1,6 +1,4 @@
 //{ Driver Code Starts
-// C++ program to remove recurring digits from
-// a given number
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -11,49 +9,62 @@ using namespace std;
 class Solution {
     // Function to find the leaders in the array.
   public:
-    vector<int> leaders(int n, int arr[]) {
+    vector<int> leaders(vector<int>& arr) {
         // Code here
-        vector<int> ans;
-        int l = arr[n-1];
-        for(int i=n-1;i>=0;i--)
+        int n = arr.size();
+        vector<int> v;
+        v.push_back(arr[n-1]);
+        int i = n-2;
+        int j = 0;
+        while(i>=0)
         {
-            if(arr[i] >= l)
+            if(arr[i]>=v[j])
             {
-                l=arr[i];
-                ans.push_back(arr[i]);
+                v.push_back(arr[i]);
+                j++;
             }
+            i--;
         }
-        reverse(ans.begin(),ans.end());
-        return ans;
+        reverse(v.begin(),v.end());
+        return v;
     }
 };
 
 //{ Driver Code Starts.
 
 int main() {
-    long long t;
-    cin >> t; // testcases
+    int t; // Number of test cases
+    cin >> t;
+    cin.ignore(); // Ignore the newline after the integer input
     while (t--) {
-        long long n;
-        cin >> n; // total size of array
+        vector<int> a;
+        string input;
 
-        int arr[n];
+        // Input format: first number n followed by the array elements
+        getline(cin, input);
+        stringstream ss(input);
+        int num;
+        while (ss >> num)
+            a.push_back(num); // Read the array elements from input string
 
-        // inserting elements in the array
-        for (long long i = 0; i < n; i++) {
-            cin >> arr[i];
-        }
         Solution obj;
-        // calling leaders() function
-        vector<int> v = obj.leaders(n, arr);
+        vector<int> result = obj.leaders(a);
 
-        // printing elements of the vector
-        for (auto it = v.begin(); it != v.end(); it++) {
-            cout << *it << " ";
+        // Print the result in the required format
+        if (result.empty()) {
+            cout << "[]"; // Print empty brackets if no leaders are found
+        } else {
+            for (int i = 0; i < result.size(); i++) {
+                if (i != 0)
+                    cout << " ";
+                cout << result[i];
+            }
         }
-
         cout << endl;
+        cout << "~" << endl;
     }
+
+    return 0;
 }
 
 // } Driver Code Ends
