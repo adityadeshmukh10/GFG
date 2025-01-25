@@ -11,23 +11,25 @@ class Solution {
 
         // Your code here
         int n = arr.size();
-        int i = 0;
-        while(i<n)
+        int low = 0;
+        int high = n-1;
+        int ans = -1;
+        
+        while(low<=high)
         {
-            if(arr[i]<k)
+            int mid = ( low+high) / 2;
+            if(arr[mid]<=k)
             {
-                i++;
-            }
-            else if(arr[i]==k)
-            {
-                return i;
+                ans = mid;
+                low = mid + 1;
             }
             else
             {
-                return i-1;
+                high = mid-1;
             }
         }
-        return -1;
+        return ans;
+        
     }
 };
 
