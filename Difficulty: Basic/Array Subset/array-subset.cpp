@@ -2,56 +2,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string isSubset(int a1[], int a2[], int n, int m) ;
+
+// } Driver Code Ends
+
+class Solution {
+  public:
+    // Function to check if b is a subset of a
+    bool isSubset(vector<int> &a, vector<int> &b) {
+        // Your code here
+        sort(a.begin(),a.end());
+        sort(b.begin(),b.end());
+        
+        int i=0,j=0;
+        int count = 0;
+        while(i<a.size() && j<b.size())
+        {
+            if(a[i]==b[j])
+            {
+                count++;
+                i++;
+                j++;
+            }
+            else if(a[i]>b[j])
+            {
+                j++;
+            }
+            else if(a[i]<b[j])
+            {
+                i++;
+            }
+        }
+        return count == b.size();
+    }
+};
+
+
+//{ Driver Code Starts.
 
 int main() {
     int t;
     cin >> t;
-
+    cin.ignore();
     while (t--) {
-        int n, m;
-        cin >> n >> m;
-        int a1[n], a2[m];
-
-        for (int i = 0; i < n; i++) {
-            cin >> a1[i];
+        vector<int> a1, a2;
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        int number;
+        while (ss >> number) {
+            a1.push_back(number);
         }
-        for (int i = 0; i < m; i++) {
-            cin >> a2[i];
+        getline(cin, input);
+        stringstream ss2(input);
+        while (ss2 >> number) {
+            a2.push_back(number);
         }
-
-        cout << isSubset(a1, a2, n, m) << endl;
+        Solution s;
+        bool ans = s.isSubset(a1, a2);
+        if (ans) {
+            cout << "true"
+                 << "\n";
+        } else {
+            cout << "false"
+                 << "\n";
+        }
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
-
 // } Driver Code Ends
-
-
-string isSubset(int a1[], int a2[], int n, int m) {
-    int i=0,j=0,count=0;
-    sort(a1,a1+n);
-    sort(a2,a2+m);
-    while(j<m)
-    {
-        if(a1[i]==a2[j])
-        {
-            i++;
-            j++;
-            count++;
-        }
-        else if(a1[i]<a2[j])
-        {
-            i++;
-        }
-        else if(a1[i]>a2[j])
-        {
-            j++;
-        }
-    }
-    if(count==m)
-    {
-        return "Yes";
-    }
-    return "No";
-}
